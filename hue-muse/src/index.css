@@ -377,3 +377,56 @@ padding-bottom: 10px;
   fill: var(--pink);
   scale: 0.95;
 }
+
+@media only screen and (max-width: 1200px) {
+
+  .title{
+    font-size: 2rem;
+    margin: 0px 20px;
+  }
+
+  .color-container{
+    padding: 0px;
+    justify-content: left;
+  }
+
+  .outer-color{
+    padding: 0px;
+    margin: 40px 0px 40px 10px;
+  }
+
+  .black-circle, .planet{
+    bottom: 80vh;
+  }
+
+  .header{
+    height: 10vh;
+  }
+  
+.arrow-down{
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .up-button{
+    right: 10px;
+  }
+
+  .dark-button{
+    right: 10px;
+  }
+
+.up-button.show{
+  right: 0px;
+  bottom: 30px;
+  opacity: 1;
+  padding: 10px;
+}
+
+.dark-button.show{
+  right: 0px;
+  top: 30px;
+  padding: 10px;
+}
+
+}
