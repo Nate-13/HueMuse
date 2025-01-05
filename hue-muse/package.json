@@ -5,10 +5,10 @@
   "type": "module",
   "homepage": "https://Nate-13.github.io/HueMuse",
   "scripts": {
-    "build": "vite build",
     "dev": "vite",
-    "preview": "vite preview",
+    "build": "vite build",
     "lint": "eslint .",
+    "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },

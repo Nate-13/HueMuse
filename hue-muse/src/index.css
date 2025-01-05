@@ -4,6 +4,12 @@ body{
   overflow-x: hidden;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  background-color: white;
+  transition: all 0.5s ease;
+}
+
+.dark{
+  background-color: hsl(0, 0%, 8%);
 }
 
 ::-webkit-scrollbar {
@@ -20,6 +26,7 @@ html{
   --violet: rgb(103, 58, 183);
   --pink: rgb(244, 143, 177);
   --off-white: #FFFDEF;
+  --button-color: rgb(168, 14, 199);
 }
 
 .header{
@@ -60,7 +67,7 @@ html{
       var(--purple)
   );
   filter: blur(70px);
-  animation: rotation 15s linear infinite;
+  animation: rotation 10s linear infinite;
 }
 
 .black-circle{
@@ -214,7 +221,6 @@ padding-bottom: 10px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  background-color: white;
   width: 100%;
   padding: 2rem;
   border: none;
@@ -312,7 +318,7 @@ padding-bottom: 10px;
   width: 50px;
   height: 50px;
   transition: all 0.3s ease;
-  fill: var(--purple);
+  fill: var(--button-color);
   background-color: transparent;
   border: none;
   background: none;
@@ -335,4 +341,39 @@ padding-bottom: 10px;
 
 .up-button.fly{
   top: -80px;
+}
+
+.dark-button {
+  background-color: transparent;
+  color: #000; /* Ensure the text is visible */
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  position: fixed;
+  top: -80px;
+  right: 30px;
+  transition: all 0.5s ease;
+}
+
+.dark-button.show {
+  top: 30px;
+}
+
+.dark-button svg {
+  width: 50px;
+  height: 50px;
+  transition: all 0.3s ease;
+  fill: var(--button-color);
+  background-color: transparent;
+  border: none;
+  background: none;
+}
+
+.dark-button:hover svg {
+  scale: 1.1;
+}
+
+.dark-button:active svg {
+  fill: var(--pink);
+  scale: 0.95;
 }

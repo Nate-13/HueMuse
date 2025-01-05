@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import MuseHeader from "./MuseHeader.jsx";
 import HueTile from "./HueTile.jsx";
 import UpButton from "./UpButton.jsx";
+import DarkButton from "./DarkButton.jsx";
 
 function App() {
   const [tiles, setTiles] = useState(Array.from({ length: 30 })); // Start with a smaller number of tiles
@@ -38,6 +39,7 @@ function App() {
         ))}
       </div>
       <UpButton />
+      <DarkButton/>
     </>
   );
 }

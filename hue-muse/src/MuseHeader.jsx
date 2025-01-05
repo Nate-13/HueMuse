@@ -61,15 +61,6 @@ function MuseHeader() {
             <div className="header" id='header'>
             <div class="planet"></div>
             <div class="black-circle"></div>
-            {/* <div className='name-box'>
-                <span className='name h'>H</span>
-                <span className='name u'>U</span>
-                <span className='name e'>E</span>
-                <span className='name m'>M</span>
-                <span className='name u2'>U</span>
-                <span className='name s'>S</span>
-                <span className='name e2'>E</span>
-            </div>   */}
                 <div className='title-box'>
                     <h1 className="title">More color combinations than</h1>
                     <h1 className="title shift">{title}<span>.</span></h1>
