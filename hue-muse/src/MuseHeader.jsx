@@ -4,14 +4,12 @@ function MuseHeader() {
     const titleOptions = [
         "stars in the Milky Way",
         "drops of water in a thunderstorm",
-        "steps walked in the past day",
-        "games of chess played ever",
-        "blinks in the past week",
-        "human heartbeats in an hour",
+        "Google searches ever made",
+        "seconds in a millennium",
         "photographs ever taken",
-        "Google searches made",
         "emails sent this year",
-        "cells in your body"
+        "cells in your body",
+        "gigabytes of data on the internet",
     ];
 
     const [title, setTitle] = useState("");
