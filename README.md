@@ -1,4 +1,4 @@
-# 🌈 Hue Muse: Inspiration thorugh color.
+# 🌈 Hue Muse: Inspiration through color.
 
 ## 🖌️ What is Hue Muse?  
 Colors evoke emotions, and as a designer, I carefully consider the colors I use in my projects. Hue Muse was created to inspire creativity through endless harmonious color combinations. The design is inspired by Josef Albers' iconic nested squares, which showcase the interplay of color. His minimalist approach emphasizes the emotional and aesthetic power of color—perfectly aligning with the purpose of Hue Muse. 
