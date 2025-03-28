@@ -33,7 +33,7 @@ A base color is slightly shifted along the hue spectrum, creating subtle variati
 ### 3️⃣ **Complementary Pairing**  
 A base color is paired with its complementary (opposite) hue, then adjusted for balance to avoid harsh contrasts.  
 
-💡 *Finding the right balance of randomness and range took trial and error, but the results speak for themselves.*  
+💡 *Finding the right balance of randomness and range took trial and error, but i'm happy with the results.*  
 
 ---
 
