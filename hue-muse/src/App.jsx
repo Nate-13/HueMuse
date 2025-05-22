@@ -1,26 +1,33 @@
 import React, { useState, useEffect } from "react";
-import MuseHeader from "./MuseHeader.jsx";
-import HueTile from "./HueTile.jsx";
-import UpButton from "./UpButton.jsx";
-import DarkButton from "./DarkButton.jsx";
+import MuseHeader from "./components/MuseHeader.jsx";
+import HueTile from "./components/HueTile.jsx";
+import UpButton from "./components/UpButton.jsx";
+import DarkButton from "./components/DarkButton.jsx";
+import BaseColorInput from "./components/BaseColorInput.jsx";
 
 function App() {
-  const [tiles, setTiles] = useState(Array.from({ length: 30 })); // Start with a smaller number of tiles
+  const [tiles, setTiles] = useState(Array.from({ length: 30 }));
+  const [baseColor, setBaseColor] = useState(null);
 
   const loadMoreTiles = () => {
     setTiles((prevTiles) => [
       ...prevTiles,
-      ...Array.from({ length: 30 }), // Add 30 more tiles
+      ...Array.from({ length: 30 }),
     ]);
   };
 
   const handleScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-    // Check if the user has scrolled to the bottom of the webpage
     if (scrollTop + clientHeight >= scrollHeight - 300) {
       loadMoreTiles();
     }
+  };
+
+  const handleBaseColorChange = (color) => {
+    setBaseColor(color);
+    // Reset tiles when base color changes
+    setTiles(Array.from({ length: 30 }));
   };
 
   useEffect(() => {
@@ -33,9 +40,10 @@ function App() {
   return (
     <>
       <MuseHeader />
+      <BaseColorInput onColorChange={handleBaseColorChange} />
       <div className="color-container">
         {tiles.map((_, index) => (
-          <HueTile key={index} />
+          <HueTile key={index} baseColor={baseColor} />
         ))}
       </div>
       <UpButton />
