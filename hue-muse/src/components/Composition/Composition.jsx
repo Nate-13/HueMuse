@@ -585,8 +585,8 @@ function Composition() {
           const oklch = hexToOklch(ping.hex);
           const textOnColor = accessibleTextColor(ping.hex);
           // Nudge position so the card doesn't overflow viewport edges
-          const cardW = 130;
-          const cardH = 132;
+          const cardW = 120;
+          const cardH = 130;
           const x = Math.min(Math.max(ping.x - cardW / 2, 12), window.innerWidth - cardW - 12);
           const y = Math.min(Math.max(ping.y - cardH / 2, 12), window.innerHeight - cardH - 12);
 
