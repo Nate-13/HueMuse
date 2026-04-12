@@ -1,7 +1,7 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import useMuseStore from "../../store/useMuseStore.js";
-import { accessibleTextColor, formatOklch, hexToOklch } from "../../lib/color/index.js";
+import { accessibleTextColor, hexToOklch } from "../../lib/color/index.js";
 import styles from "./Composition.module.css";
 
 /* ============================================================
@@ -543,6 +543,11 @@ function Composition() {
 
   const [pings, setPings] = useState([]);
   const clickPos = useRef({ x: 0, y: 0 });
+
+  // Clear pings when composition changes
+  useEffect(() => {
+    setPings([]);
+  }, [compositionKey]);
 
   const handleClickColor = useCallback((index) => {
     const hex = useMuseStore.getState().palette[index];
