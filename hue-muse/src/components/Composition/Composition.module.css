@@ -1,0 +1,274 @@
+.wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+.comp {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Smooth color transitions for hue stepping */
+.comp,
+.comp > *,
+.comp > * > *,
+.comp > * > * > * {
+  transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* === Rings === */
+.ringsOuter {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ringsMid {
+  width: 65vmin;
+  height: 65vmin;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ringsInner {
+  width: 65%;
+  height: 65%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ringsCore {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* === Slabs / Columns === */
+.slab {
+  cursor: pointer;
+}
+
+/* === Eclipse === */
+.eclipseCircle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vmin;
+  height: 50vmin;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.eclipseInner {
+  width: 55%;
+  height: 55%;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translate(55%, -38%);
+}
+
+/* === Nested === */
+.nestedRect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* === Stack === */
+.stackCard {
+  position: absolute;
+  cursor: pointer;
+}
+
+/* === Copy Swatch — paint chip card at click point === */
+.swatch {
+  position: fixed;
+  z-index: 200;
+  pointer-events: none;
+  width: 130px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.25),
+    0 1px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Color field — top portion */
+.swatchColor {
+  height: 90px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 10px 12px;
+}
+
+.swatchCopied {
+  font-family: var(--void-font);
+  font-size: 0.55rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+/* Info — bottom strip */
+.swatchInfo {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  padding: 9px 12px;
+}
+
+.swatchHex {
+  font-family: var(--void-font);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: rgba(255, 253, 239, 0.9);
+}
+
+/* ============================================================
+   ENTRANCE ANIMATIONS
+   Refined, elegant. Each serves the form.
+   Shared easing: cubic-bezier(0.16, 1, 0.3, 1) — fast out, gentle land.
+   ============================================================ */
+
+/* Fade */
+.animFade {
+  animation: fade 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes fade {
+  from { opacity: 0; }
+}
+
+/* Rings: expand from center — smooth scale, no bounce */
+.animExpand {
+  animation: expand 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes expand {
+  from { transform: scale(0.88); opacity: 0; }
+}
+
+/* Slabs: reveal height from 0 */
+.animRevealH {
+  animation: revealH 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes revealH {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Columns: reveal width from left */
+.animRevealW {
+  animation: revealW 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes revealW {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Quarters: grow from corner */
+.animCornerTL {
+  animation: cornerTL 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes cornerTL {
+  from { clip-path: inset(0 100% 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.animCornerTR {
+  animation: cornerTR 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes cornerTR {
+  from { clip-path: inset(0 0 100% 100%); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.animCornerBL {
+  animation: cornerBL 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes cornerBL {
+  from { clip-path: inset(100% 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.animCornerBR {
+  animation: cornerBR 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes cornerBR {
+  from { clip-path: inset(100% 0 0 100%); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Split: wipe open from center */
+.animWipeRight {
+  animation: wipeRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes wipeRight {
+  from { clip-path: inset(0 0 0 100%); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.animWipeLeft {
+  animation: wipeLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes wipeLeft {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Grid/Mondrian: gentle fade-scale per cell */
+.animCell {
+  animation: cell 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes cell {
+  from { opacity: 0; transform: scale(0.94); }
+}
+
+/* Stack: slide into place from offset */
+.animSlide {
+  animation: slide 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes slide {
+  from { opacity: 0; transform: translateY(-20px); }
+}
+
+/* Diagonal: wipe along the diagonal edge */
+.animDiagTL {
+  animation: diagTL 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes diagTL {
+  from { clip-path: polygon(0 0, 0 0, 0 0); }
+  to { clip-path: polygon(0 0, 100% 0, 0 100%); }
+}
+
+.animDiagBR {
+  animation: diagBR 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes diagBR {
+  from { clip-path: polygon(100% 100%, 100% 100%, 100% 100%); }
+  to { clip-path: polygon(100% 0, 100% 100%, 0 100%); }
+}
+
+/* Duo: circles scale up gently in place */
+.animGrow {
+  animation: grow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes grow {
+  from { transform: scale(0.6); opacity: 0; }
+}

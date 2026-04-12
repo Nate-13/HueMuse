@@ -1,0 +1,195 @@
+import { create } from "zustand";
+import {
+  hexToOklch,
+  oklchToHex,
+} from "../lib/color/index.js";
+import { generatePalette } from "../lib/color/harmony.js";
+
+const HUE_STEPS = 10;
+const STEP_DEGREES = 360 / HUE_STEPS; // 36° per step
+
+let _compKeys = null;
+function getCompKeys() {
+  if (!_compKeys) {
+    _compKeys = [
+      "nested", "slabs", "columns", "rings", "eclipse", "quarters",
+      "split", "mondrian", "frame", "stack", "diagonal", "stripes",
+      "grid", "duo", "corners", "horizon", "cascade", "cross",
+      "ladder", "orbit", "weave", "totem", "float",
+      "diamond", "steps", "triad",
+    ];
+  }
+  return _compKeys;
+}
+
+function pickCompType(locked) {
+  if (locked) return locked;
+  const keys = getCompKeys();
+  return keys[Math.floor(Math.random() * keys.length)];
+}
+
+/** Rotate every color in a palette by `degrees` in OKLCH hue. */
+function rotatePalette(basePalette, degrees) {
+  if (degrees === 0) return basePalette;
+  return basePalette.map((hex) => {
+    const oklch = hexToOklch(hex);
+    if (oklch) {
+      oklch.h = ((oklch.h || 0) + degrees + 360) % 360;
+      return oklchToHex(oklch);
+    }
+    return hex;
+  });
+}
+
+const initialBase = generatePalette("mixed");
+const initialCompType = pickCompType(null);
+
+const useMuseStore = create((set, get) => ({
+  basePalette: initialBase,
+  hueStep: 0,
+  palette: initialBase,
+  compType: initialCompType,
+  lockedCompType: null,
+  harmonyMode: "mixed",
+  compositionKey: 0,
+
+  // History for arrow key navigation
+  history: [{ basePalette: initialBase, compType: initialCompType }],
+  historyIndex: 0,
+
+  saved: [],
+
+  // Generate new composition — pushes to history
+  generate: (mode) => {
+    const m = mode || get().harmonyMode;
+    const { lockedCompType, history, historyIndex } = get();
+    const newBase = generatePalette(m);
+    const newComp = pickCompType(lockedCompType);
+
+    // Truncate any forward history and append
+    const trimmed = history.slice(0, historyIndex + 1);
+    const entry = { basePalette: newBase, compType: newComp };
+    const newHistory = [...trimmed, entry];
+
+    set((s) => ({
+      basePalette: newBase,
+      hueStep: 0,
+      palette: newBase,
+      compType: newComp,
+      compositionKey: s.compositionKey + 1,
+      history: newHistory,
+      historyIndex: newHistory.length - 1,
+    }));
+  },
+
+  // Navigate history backwards
+  historyBack: () => {
+    const { history, historyIndex } = get();
+    if (historyIndex <= 0) return;
+    const prev = history[historyIndex - 1];
+    set((s) => ({
+      basePalette: prev.basePalette,
+      hueStep: 0,
+      palette: prev.basePalette,
+      compType: prev.compType,
+      compositionKey: s.compositionKey + 1,
+      historyIndex: historyIndex - 1,
+    }));
+  },
+
+  // Navigate history forwards
+  historyForward: () => {
+    const { history, historyIndex } = get();
+    if (historyIndex >= history.length - 1) return;
+    const next = history[historyIndex + 1];
+    set((s) => ({
+      basePalette: next.basePalette,
+      hueStep: 0,
+      palette: next.basePalette,
+      compType: next.compType,
+      compositionKey: s.compositionKey + 1,
+      historyIndex: historyIndex + 1,
+    }));
+  },
+
+  setCompType: (type) => {
+    set((s) => ({
+      lockedCompType: type,
+      compType: type || pickCompType(null),
+      compositionKey: s.compositionKey + 1,
+    }));
+  },
+
+  setHarmonyMode: (mode) => {
+    set({ harmonyMode: mode });
+    get().generate(mode);
+  },
+
+  // Step hue forward or backward — snaps to 10 discrete positions, loops
+  stepHue: (direction) => {
+    set((s) => {
+      const next = ((s.hueStep + direction) % HUE_STEPS + HUE_STEPS) % HUE_STEPS;
+      return {
+        hueStep: next,
+        palette: rotatePalette(s.basePalette, next * STEP_DEGREES),
+      };
+    });
+  },
+
+  // Jump directly to a specific step
+  setHueStep: (step) => {
+    const clamped = ((step % HUE_STEPS) + HUE_STEPS) % HUE_STEPS;
+    set((s) => ({
+      hueStep: clamped,
+      palette: rotatePalette(s.basePalette, clamped * STEP_DEGREES),
+    }));
+  },
+
+  // Get the preview color (first color) for a given step
+  getStepPreview: (step) => {
+    const { basePalette } = get();
+    const rotated = rotatePalette(basePalette, step * STEP_DEGREES);
+    return rotated[0];
+  },
+
+  tweakColor: (index, hex) => {
+    set((s) => {
+      const palette = [...s.palette];
+      palette[index] = hex;
+      // Also update basePalette so scroll stays relative to tweaked version
+      const basePalette = [...s.basePalette];
+      const reverseDeg = -(s.hueStep * STEP_DEGREES);
+      const oklch = hexToOklch(hex);
+      if (oklch) {
+        oklch.h = ((oklch.h || 0) + reverseDeg + 360) % 360;
+        basePalette[index] = oklchToHex(oklch);
+      }
+      return { palette, basePalette };
+    });
+  },
+
+  savePalette: () => {
+    const { palette, saved } = get();
+    const id = crypto.randomUUID();
+    set({ saved: [...saved, { id, colors: [...palette] }] });
+  },
+
+  removeSaved: (id) => {
+    set((s) => ({ saved: s.saved.filter((p) => p.id !== id) }));
+  },
+
+  loadPalette: (id) => {
+    const { saved } = get();
+    const found = saved.find((p) => p.id === id);
+    if (found) {
+      set((s) => ({
+        basePalette: [...found.colors],
+        hueStep: 0,
+        palette: [...found.colors],
+        compositionKey: s.compositionKey + 1,
+      }));
+    }
+  },
+}));
+
+export default useMuseStore;

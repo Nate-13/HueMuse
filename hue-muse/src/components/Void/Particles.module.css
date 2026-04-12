@@ -1,0 +1,36 @@
+.field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dot {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 253, 239, 0.8);
+  will-change: transform, opacity;
+  animation: drift linear infinite;
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0, 0);
+    opacity: var(--start-opacity, 0.2);
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(var(--drift-x), var(--drift-y));
+    opacity: 0.15;
+  }
+  75% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: var(--start-opacity, 0.2);
+  }
+}

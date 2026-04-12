@@ -1,0 +1,31 @@
+.container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  user-select: none;
+  mix-blend-mode: soft-light;
+}
+
+.prefix {
+  font-size: clamp(1rem, 2.5vw, 1.8rem);
+  color: rgba(255, 253, 239, 0.035);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.tagline {
+  font-size: clamp(1rem, 2.5vw, 1.8rem);
+  color: rgba(255, 253, 239, 0.05);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  min-height: 1.4em;
+  white-space: nowrap;
+}
