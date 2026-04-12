@@ -9,6 +9,11 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+}
+
+.comp * {
+  cursor: pointer;
 }
 
 /* Smooth color transitions for hue stepping */

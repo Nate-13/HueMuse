@@ -31,7 +31,7 @@ body {
   font-family: var(--void-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: crosshair;
+  cursor: default;
 }
 
 #root {
