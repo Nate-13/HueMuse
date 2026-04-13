@@ -1,0 +1,148 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--void-bg);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.title {
+  font-family: var(--void-font);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--void-text);
+}
+
+.author {
+  font-family: var(--void-font);
+  font-size: 0.6rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: rgba(255, 253, 239, 0.25);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.author:hover {
+  color: rgba(255, 253, 239, 0.5);
+}
+
+/* Two-column grid — fixed left column keeps labels aligned */
+.grid {
+  display: grid;
+  grid-template-columns: 7rem auto;
+  row-gap: 1.8rem;
+  column-gap: 1.6rem;
+  align-items: center;
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+}
+
+/* Keycap base */
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2rem;
+  padding: 0 0.75rem;
+  min-width: 2.2rem;
+  border: 1px solid rgba(255, 253, 239, 0.08);
+  border-radius: 7px;
+  background: rgba(255, 253, 239, 0.025);
+  box-shadow:
+    0 1px 0 rgba(255, 253, 239, 0.04),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+  font-family: var(--void-font);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(255, 253, 239, 0.5);
+  text-transform: uppercase;
+}
+
+.keyWide {
+  min-width: 5.5rem;
+}
+
+.keyPair {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.keyArrow {
+  font-size: 1.1rem;
+  padding: 0 0.6rem;
+  font-weight: 300;
+}
+
+/* Icon + label stacks for mouse actions */
+.iconGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.iconLabel {
+  font-family: var(--void-font);
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 253, 239, 0.35);
+}
+
+.scrollDot {
+  animation: scrollBounce 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(7px); opacity: 0.15; }
+}
+
+/* Description labels */
+.label {
+  font-family: var(--void-font);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--void-text-dim);
+}
+
+/* Space key glow pulse */
+.keyPulse {
+  animation: keyGlow 2.4s ease-in-out infinite;
+}
+
+@keyframes keyGlow {
+  0%, 100% {
+    border-color: rgba(255, 253, 239, 0.08);
+    box-shadow:
+      0 1px 0 rgba(255, 253, 239, 0.04),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+  }
+  50% {
+    border-color: rgba(255, 253, 239, 0.3);
+    box-shadow:
+      0 1px 0 rgba(255, 253, 239, 0.04),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+      0 0 14px rgba(255, 253, 239, 0.05);
+  }
+}

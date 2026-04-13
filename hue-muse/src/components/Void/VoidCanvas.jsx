@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import useMuseStore from "../../store/useMuseStore.js";
 import Particles from "./Particles.jsx";
+import Onboarding from "./Onboarding.jsx";
 import Composition from "../Composition/Composition.jsx";
 import HUD from "../Composition/HUD.jsx";
 import HueSteps from "../Composition/HueSteps.jsx";
@@ -67,6 +68,7 @@ function VoidCanvas() {
       <Composition />
       <HueSteps />
       <HUD />
+      <Onboarding />
     </div>
   );
 }
