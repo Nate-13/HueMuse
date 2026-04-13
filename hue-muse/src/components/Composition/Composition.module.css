@@ -278,3 +278,45 @@
 @keyframes grow {
   from { transform: scale(0.6); opacity: 0; }
 }
+
+/* Sunrise: wedges fan out from center point */
+.animWedgeTop {
+  animation: wedgeTop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes wedgeTop {
+  from { clip-path: polygon(50% 50%, 50% 50%, 50% 50%); }
+  to { clip-path: polygon(50% 50%, 0% 0%, 100% 0%); }
+}
+
+.animWedgeRight {
+  animation: wedgeRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes wedgeRight {
+  from { clip-path: polygon(50% 50%, 50% 50%, 50% 50%); }
+  to { clip-path: polygon(50% 50%, 100% 0%, 100% 100%); }
+}
+
+.animWedgeBottom {
+  animation: wedgeBottom 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes wedgeBottom {
+  from { clip-path: polygon(50% 50%, 50% 50%, 50% 50%); }
+  to { clip-path: polygon(50% 50%, 100% 100%, 0% 100%); }
+}
+
+.animWedgeLeft {
+  animation: wedgeLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes wedgeLeft {
+  from { clip-path: polygon(50% 50%, 50% 50%, 50% 50%); }
+  to { clip-path: polygon(50% 50%, 0% 100%, 0% 0%); }
+}
+
+/* Arch: reveal upward from bottom edge */
+.animRevealUp {
+  animation: revealUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes revealUp {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}

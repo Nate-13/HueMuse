@@ -17,6 +17,9 @@ function getCompKeys() {
       "grid", "duo", "corners", "horizon", "cascade", "cross",
       "ladder", "orbit", "weave", "totem", "float",
       "diamond", "steps", "triad",
+      "sunrise", "crescent", "spotlight", "hex", "ripple",
+      "arch", "lens", "pyramid", "chevron", "dotgrid",
+      "letterbox", "canyon", "bloom", "wave",
     ];
   }
   return _compKeys;

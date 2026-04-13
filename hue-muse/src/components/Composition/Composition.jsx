@@ -343,6 +343,200 @@ function Triad({ palette, onClickColor }) {
 }
 
 /* ============================================================
+   NEW COMPOSITIONS — 15 additional designs
+   ============================================================ */
+
+function Sunrise({ palette, onClickColor }) {
+  const [c1, c2, c3, c4] = palette;
+  const colors = [c1, c2, c3 || c1, c4 || c2];
+  const anims = [styles.animWedgeTop, styles.animWedgeRight, styles.animWedgeBottom, styles.animWedgeLeft];
+  return (
+    <div className={styles.comp}>
+      {anims.map((anim, i) => (
+        <div key={i} className={anim} style={{ position: "absolute", inset: 0, background: colors[i], animationDelay: `${i * 0.07}s` }} onClick={() => onClickColor(colors[i])} />
+      ))}
+    </div>
+  );
+}
+
+function Crescent({ palette, onClickColor }) {
+  const [c1, c2] = palette;
+  return (
+    <div className={`${styles.comp} ${styles.animFade}`} style={{ background: c1 }} onClick={() => onClickColor(c1)}>
+      <div className={styles.animExpand} style={{ position: "absolute", left: "calc(50% - 25vmin)", top: "calc(50% - 25vmin)", width: "50vmin", height: "50vmin", borderRadius: "50%", background: c2, animationDelay: "0.08s" }} onClick={(e) => { e.stopPropagation(); onClickColor(c2); }} />
+      <div className={styles.animFade} style={{ position: "absolute", left: "calc(50% - 13vmin)", top: "calc(50% - 30vmin)", width: "42vmin", height: "42vmin", borderRadius: "50%", background: c1, animationDelay: "0.16s" }} onClick={(e) => { e.stopPropagation(); onClickColor(c1); }} />
+    </div>
+  );
+}
+
+function Spotlight({ palette, onClickColor }) {
+  const [c1, c2, c3] = palette;
+  const stage = c3 || c2;
+  return (
+    <div className={`${styles.comp} ${styles.animFade}`} style={{ background: c1 }} onClick={() => onClickColor(c1)}>
+      <div className={styles.animGrow} style={{ position: "absolute", left: "calc(70% - 7vmin)", top: "calc(18% - 7vmin)", width: "14vmin", height: "14vmin", borderRadius: "50%", background: c2, animationDelay: "0.1s" }} onClick={(e) => { e.stopPropagation(); onClickColor(c2); }} />
+      <div className={styles.animFade} style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "35%", background: stage, animationDelay: "0.06s" }} onClick={(e) => { e.stopPropagation(); onClickColor(stage); }} />
+    </div>
+  );
+}
+
+function Hex({ palette, onClickColor }) {
+  const [c1, c2, c3] = palette;
+  const inner = c3 || c1;
+  const hexPoly = "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)";
+  return (
+    <div className={`${styles.comp} ${styles.animFade}`} style={{ background: c1 }} onClick={() => onClickColor(c1)}>
+      <div className={styles.animExpand} style={{ position: "absolute", left: "calc(50% - 32vmin)", top: "calc(50% - 32vmin)", width: "64vmin", height: "64vmin", background: c2, clipPath: hexPoly, animationDelay: "0.06s" }} onClick={(e) => { e.stopPropagation(); onClickColor(c2); }} />
+      <div className={styles.animExpand} style={{ position: "absolute", left: "calc(50% - 18vmin)", top: "calc(50% - 18vmin)", width: "36vmin", height: "36vmin", background: inner, clipPath: hexPoly, animationDelay: "0.14s" }} onClick={(e) => { e.stopPropagation(); onClickColor(inner); }} />
+    </div>
+  );
+}
+
+function Ripple({ palette, onClickColor }) {
+  const [c1, c2, c3, c4] = palette;
+  const ringColors = [c2, c3 || c2, c4 || c2];
+  const rings = [
+    { size: 65, border: 5 },
+    { size: 42, border: 4 },
+    { size: 22, border: 3 },
+  ];
+  return (
+    <div className={`${styles.comp} ${styles.animFade}`} style={{ background: c1 }} onClick={() => onClickColor(c1)}>
+      {rings.map((r, i) => {
+        const color = ringColors[i % ringColors.length];
+        return (
+          <div key={i} className={styles.animExpand} style={{ position: "absolute", left: `calc(50% - ${r.size / 2}vmin)`, top: `calc(50% - ${r.size / 2}vmin)`, width: `${r.size}vmin`, height: `${r.size}vmin`, borderRadius: "50%", border: `${r.border}vmin solid ${color}`, background: "transparent", transition: "border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1)", animationDelay: `${i * 0.08}s` }} onClick={(e) => { e.stopPropagation(); onClickColor(color); }} />
+        );
+      })}
+    </div>
+  );
+}
+
+function Arch({ palette, onClickColor }) {
+  const [c1, c2, c3] = palette;
+  const inner = c3 || c1;
+  return (
+    <div className={`${styles.comp} ${styles.animFade}`} style={{ background: c1 }} onClick={() => onClickColor(c1)}>
+      <div className={styles.animGrow} style={{ position: "absolute", bottom: 0, left: "calc(50% - 38vmin)", width: "76vmin", height: "70vmin", borderRadius: "38vmin 38vmin 0 0", background: c2, transformOrigin: "center bottom", animationDelay: "0.06s" }} onClick={(e) => { e.stopPropagation(); onClickColor(c2); }}>
+        <div className={styles.animGrow} style={{ position: "absolute", bottom: 0, left: "10vmin", width: "56vmin", height: "60vmin", borderRadius: "28vmin 28vmin 0 0", background: inner, transformOrigin: "center bottom", animationDelay: "0.14s" }} onClick={(e) => { e.stopPropagation(); onClickColor(inner); }} />
+      </div>
+    </div>
+  );
+}
+
+function Lens({ palette, onClickColor }) {
+  const [c1, c2, c3] = palette;
+  const iris = c3 || c1;
+  return (
+    <div className={`${styles.comp} ${styles.animFade}`} style={{ background: c1 }} onClick={() => onClickColor(c1)}>
+      <div className={styles.animFade} style={{ position: "absolute", inset: 0, background: c2, clipPath: "ellipse(45% 22% at 50% 50%)", animationDelay: "0.08s" }} onClick={(e) => { e.stopPropagation(); onClickColor(c2); }} />
+      <div className={styles.animGrow} style={{ position: "absolute", left: "calc(50% - 10vmin)", top: "calc(50% - 10vmin)", width: "20vmin", height: "20vmin", borderRadius: "50%", background: iris, animationDelay: "0.14s" }} onClick={(e) => { e.stopPropagation(); onClickColor(iris); }} />
+    </div>
+  );
+}
+
+function Pyramid({ palette, onClickColor }) {
+  const [c1, c2, c3] = palette;
+  const inner = c3 || c1;
+  return (
+    <div className={`${styles.comp} ${styles.animFade}`} style={{ background: c1 }} onClick={() => onClickColor(c1)}>
+      <div className={styles.animExpand} style={{ position: "absolute", inset: 0, background: c2, clipPath: "polygon(50% 10%, 90% 90%, 10% 90%)", animationDelay: "0.06s" }} onClick={(e) => { e.stopPropagation(); onClickColor(c2); }} />
+      <div className={styles.animExpand} style={{ position: "absolute", inset: 0, background: inner, clipPath: "polygon(50% 30%, 75% 80%, 25% 80%)", animationDelay: "0.14s" }} onClick={(e) => { e.stopPropagation(); onClickColor(inner); }} />
+    </div>
+  );
+}
+
+function Chevron({ palette, onClickColor }) {
+  const [c1, c2, c3] = palette;
+  const inner = c3 || c1;
+  return (
+    <div className={`${styles.comp} ${styles.animFade}`} style={{ background: c1 }} onClick={() => onClickColor(c1)}>
+      <div className={styles.animExpand} style={{ position: "absolute", inset: 0, background: c2, clipPath: "polygon(0% 100%, 50% 25%, 100% 100%)", animationDelay: "0.06s" }} onClick={(e) => { e.stopPropagation(); onClickColor(c2); }} />
+      <div className={styles.animExpand} style={{ position: "absolute", inset: 0, background: inner, clipPath: "polygon(12% 100%, 50% 42%, 88% 100%)", animationDelay: "0.12s" }} onClick={(e) => { e.stopPropagation(); onClickColor(inner); }} />
+    </div>
+  );
+}
+
+function DotGrid({ palette, onClickColor }) {
+  const cols = 5, rows = 4;
+  return (
+    <div className={styles.comp} style={{ background: palette[0], display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gridTemplateRows: `repeat(${rows}, 1fr)` }} onClick={() => onClickColor(palette[0])}>
+      {Array.from({ length: cols * rows }, (_, i) => {
+        const color = palette[(i % (palette.length - 1)) + 1];
+        const col = i % cols, row = Math.floor(i / cols);
+        return (
+          <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "center" }} onClick={(e) => { e.stopPropagation(); onClickColor(color); }}>
+            <div className={styles.animGrow} style={{ width: "6vmin", height: "6vmin", borderRadius: "50%", background: color, animationDelay: `${(col + row) * 0.03}s` }} />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function Letterbox({ palette, onClickColor }) {
+  const [c1, c2, c3] = palette;
+  const accent = c3 || c1;
+  return (
+    <div className={styles.comp} style={{ display: "flex", flexDirection: "column" }}>
+      <div className={styles.animRevealH} style={{ flex: "0 0 20%", background: c1 }} onClick={() => onClickColor(c1)} />
+      <div className={styles.animFade} style={{ flex: 1, background: c2, display: "flex", alignItems: "center", justifyContent: "center", animationDelay: "0.06s" }} onClick={() => onClickColor(c2)}>
+        <div className={styles.animGrow} style={{ width: "18vmin", height: "18vmin", borderRadius: "50%", background: accent, animationDelay: "0.14s" }} onClick={(e) => { e.stopPropagation(); onClickColor(accent); }} />
+      </div>
+      <div className={styles.animRevealUp} style={{ flex: "0 0 20%", background: c1, animationDelay: "0.04s" }} onClick={() => onClickColor(c1)} />
+    </div>
+  );
+}
+
+function Canyon({ palette, onClickColor }) {
+  const [c1, c2, c3] = palette;
+  const cc3 = c3 || c1;
+  return (
+    <div className={`${styles.comp} ${styles.animFade}`} style={{ background: c1 }} onClick={() => onClickColor(c1)}>
+      <div className={styles.animGrow} style={{ position: "absolute", left: "-25vmin", top: "calc(50% - 40vmin)", width: "80vmin", height: "80vmin", borderRadius: "50%", background: c2, animationDelay: "0.06s" }} onClick={(e) => { e.stopPropagation(); onClickColor(c2); }} />
+      <div className={styles.animGrow} style={{ position: "absolute", right: "-25vmin", top: "calc(50% - 40vmin)", width: "80vmin", height: "80vmin", borderRadius: "50%", background: cc3, animationDelay: "0.1s" }} onClick={(e) => { e.stopPropagation(); onClickColor(cc3); }} />
+    </div>
+  );
+}
+
+function Bloom({ palette, onClickColor }) {
+  const [c1, c2, c3, c4] = palette;
+  const cc3 = c3 || c1, cc4 = c4 || c2;
+  const circles = [
+    { size: 35, ox: -8, oy: -6, color: c2, delay: 0.06 },
+    { size: 30, ox: 10, oy: -4, color: cc3, delay: 0.1 },
+    { size: 28, ox: -3, oy: 10, color: cc4, delay: 0.14 },
+    { size: 22, ox: 12, oy: 8, color: c2, delay: 0.18 },
+  ];
+  return (
+    <div className={`${styles.comp} ${styles.animFade}`} style={{ background: c1 }} onClick={() => onClickColor(c1)}>
+      {circles.map((c, i) => (
+        <div key={i} className={styles.animGrow} style={{ position: "absolute", left: `calc(50% + ${c.ox}vmin - ${c.size / 2}vmin)`, top: `calc(50% + ${c.oy}vmin - ${c.size / 2}vmin)`, width: `${c.size}vmin`, height: `${c.size}vmin`, borderRadius: "50%", background: c.color, animationDelay: `${c.delay}s` }} onClick={(e) => { e.stopPropagation(); onClickColor(c.color); }} />
+      ))}
+    </div>
+  );
+}
+
+/* Pre-computed wavy polygon — 40 segments, gentle sine */
+const _wN = 40;
+const _wPts = [];
+for (let i = 0; i <= _wN; i++) {
+  _wPts.push({ x: ((i / _wN) * 100), y: (50 + 4 * Math.sin((i / _wN) * Math.PI * 3)) });
+}
+const WAVE_TOP = `polygon(0% 0%, 100% 0%, ${_wPts.slice().reverse().map(p => `${p.x.toFixed(1)}% ${p.y.toFixed(1)}%`).join(", ")})`;
+const WAVE_BTM = `polygon(${_wPts.map(p => `${p.x.toFixed(1)}% ${p.y.toFixed(1)}%`).join(", ")}, 100% 100%, 0% 100%)`;
+
+function Wave({ palette, onClickColor }) {
+  const [c1, c2] = palette;
+  return (
+    <div className={styles.comp}>
+      <div className={styles.animFade} style={{ position: "absolute", inset: 0, background: c2 }} onClick={() => onClickColor(c2)} />
+      <div className={styles.animExpand} style={{ position: "absolute", inset: 0, background: c1, clipPath: WAVE_TOP, animationDelay: "0.06s" }} onClick={() => onClickColor(c1)} />
+    </div>
+  );
+}
+
+/* ============================================================
    REGISTRY
    ============================================================ */
 
@@ -373,6 +567,20 @@ export const COMP_REGISTRY = {
   diamond: { label: "Diamond", component: Diamond },
   steps: { label: "Steps", component: Steps },
   triad: { label: "Triad", component: Triad },
+  sunrise: { label: "Sunrise", component: Sunrise },
+  crescent: { label: "Crescent", component: Crescent },
+  spotlight: { label: "Spotlight", component: Spotlight },
+  hex: { label: "Hex", component: Hex },
+  ripple: { label: "Ripple", component: Ripple },
+  arch: { label: "Arch", component: Arch },
+  lens: { label: "Lens", component: Lens },
+  pyramid: { label: "Pyramid", component: Pyramid },
+  chevron: { label: "Chevron", component: Chevron },
+  dotgrid: { label: "Dot Grid", component: DotGrid },
+  letterbox: { label: "Letterbox", component: Letterbox },
+  canyon: { label: "Canyon", component: Canyon },
+  bloom: { label: "Bloom", component: Bloom },
+  wave: { label: "Wave", component: Wave },
 };
 
 export const COMP_KEYS = Object.keys(COMP_REGISTRY);
