@@ -41,13 +41,52 @@ function rotatePalette(basePalette, degrees) {
   });
 }
 
-const initialBase = generatePalette("mixed");
-const initialCompType = pickCompType(null);
+/** Encode state as a URL hash: #AABBCC-DDEEFF.compType.hueStep */
+function encodeHash(basePalette, compType, hueStep) {
+  const colors = basePalette.map((h) => h.replace("#", "")).join("-");
+  return `#${colors}.${compType}.${hueStep}`;
+}
+
+/** Parse a hash string back into state. Returns null if invalid. */
+function parseHash(hash) {
+  if (!hash || hash.length < 2) return null;
+  const raw = hash.startsWith("#") ? hash.slice(1) : hash;
+  const parts = raw.split(".");
+  if (parts.length < 2) return null;
+
+  const colorStr = parts[0];
+  const compType = parts[1];
+  const hueStep = parts.length >= 3 ? parseInt(parts[2], 10) : 0;
+
+  const hexes = colorStr.split("-").map((c) => `#${c}`);
+  if (hexes.length < 2 || hexes.some((h) => !/^#[0-9A-Fa-f]{6}$/.test(h))) {
+    return null;
+  }
+
+  const keys = getCompKeys();
+  if (!keys.includes(compType)) return null;
+
+  const step = isNaN(hueStep) ? 0 : ((hueStep % HUE_STEPS) + HUE_STEPS) % HUE_STEPS;
+  return { basePalette: hexes, compType, hueStep: step };
+}
+
+// Try to hydrate from URL hash on load
+const hashState = parseHash(window.location.hash);
+const initialBase = hashState ? hashState.basePalette : generatePalette("mixed");
+const initialCompType = hashState ? hashState.compType : pickCompType(null);
+const initialHueStep = hashState ? hashState.hueStep : 0;
+const initialPalette = rotatePalette(initialBase, initialHueStep * STEP_DEGREES);
+
+/** Silently update the URL hash to reflect current state. */
+function syncHash(basePalette, compType, hueStep) {
+  const hash = encodeHash(basePalette, compType, hueStep);
+  history.replaceState(null, "", window.location.pathname + window.location.search + hash);
+}
 
 const useMuseStore = create((set, get) => ({
   basePalette: initialBase,
-  hueStep: 0,
-  palette: initialBase,
+  hueStep: initialHueStep,
+  palette: initialPalette,
   compType: initialCompType,
   lockedCompType: null,
   harmonyMode: "mixed",
@@ -191,5 +230,11 @@ const useMuseStore = create((set, get) => ({
     }
   },
 }));
+
+// Keep URL hash in sync with visible state
+syncHash(initialBase, initialCompType, initialHueStep);
+useMuseStore.subscribe((state) => {
+  syncHash(state.basePalette, state.compType, state.hueStep);
+});
 
 export default useMuseStore;
