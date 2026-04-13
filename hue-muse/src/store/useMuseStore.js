@@ -234,10 +234,13 @@ const useMuseStore = create((set, get) => ({
   },
 }));
 
-// Keep URL hash in sync with visible state
+// Keep URL hash + favicon in sync with visible state
+import { updateFavicon } from "../lib/favicon.js";
 syncHash(initialBase, initialCompType, initialHueStep);
+updateFavicon(initialPalette);
 useMuseStore.subscribe((state) => {
   syncHash(state.basePalette, state.compType, state.hueStep);
+  updateFavicon(state.palette);
 });
 
 export default useMuseStore;
