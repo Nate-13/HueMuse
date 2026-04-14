@@ -139,10 +139,13 @@ const useMuseStore = create((set, get) => ({
     }));
   },
 
-  // Navigate history forwards
+  // Navigate history forwards — generates a new palette if at latest entry
   historyForward: () => {
     const { history, historyIndex } = get();
-    if (historyIndex >= history.length - 1) return;
+    if (historyIndex >= history.length - 1) {
+      get().generate();
+      return;
+    }
     const next = history[historyIndex + 1];
     set((s) => ({
       basePalette: next.basePalette,
